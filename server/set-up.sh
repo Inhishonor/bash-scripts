@@ -14,10 +14,13 @@ echo "Would you like to install and configure an open vpn client? [y/n]"
 read vpnanswer
 if [ "$vpnanswer" = "y" ]; then
   sudo apt install openvpn -y
-  echo "Please copy the contents of the client.conf file, from the open VPN server."
+  echo "Please copy the contents of the client.conf file from the open VPN server."
   sudo nano /etc/openvpn/client.conf 
-  echo "Next, the script is going to test if the VPN works. The terminal will lock into execution, while it is verify the connection at the OpenVPN server. Then return here, and use ctrl + c, to stop the process and this script."
-  sudo openvpn --config /etc/openvpn/client.conf 
+  echo "Press enter when you have finished editing the file..."
+  read
+  echo "Next, the script is going to test if the VPN works. The terminal will lock into execution, while you will need to verify the connection at the OpenVPN server. Then return here, and press ctrl + c, to stop the process and this script."
+  sudo openvpn --config /etc/openvpn/client.conf || echo "There was an error, please double check the vpn configuration, and run this script again. Press enter to exit."
+  read
 else
   echo "That's it!"
 fi
